@@ -1,0 +1,14 @@
+{
+  "test" : {
+    "prop1" : "value1",
+    "prop2" : 10,
+    "prop3" : [
+      "element1",
+      "element2"
+    ],
+    "prop4" : {
+      "prop5" : false,
+      "prop6" : null
+    }
+  }
+}
