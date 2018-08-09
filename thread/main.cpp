@@ -6,7 +6,9 @@
 #include <Poco/Logger.h>
 #include <Poco/Message.h>
 #include <Poco/PatternFormatter.h>
+#include <Poco/Process.h>
 #include <Poco/Runnable.h>
+#include <Poco/SignalHandler.h>
 #include <Poco/SplitterChannel.h>
 #include <Poco/Thread.h>
 #include <Poco/Util/Application.h>
@@ -24,12 +26,15 @@ using Poco::Logger;
 using Poco::Message;
 
 class HelloRunnable : public Poco::Runnable {
+public:
+  virtual ~HelloRunnable() { std::cout << "thread exit" << std::endl; }
   virtual void run() {
     Logger *logger = &Logger::get("TestLog");
     while (true) {
       Poco::Thread::sleep(1000);
       // logger->trace(Poco::format("hello, world!->%s", std::string("abc")));
-      logger->trace(Poco::format("hello, world!->%d",
+      logger->trace(Poco::format("[%d] hello, world!->%d",
+                                 static_cast<int>(Poco::Process::id()),
                                  static_cast<int>(Poco::Thread::currentTid())));
     }
   }
@@ -60,12 +65,22 @@ protected:
 
   int main(const std::vector<std::string> &arguments) {
     _logger->trace("start");
+    try {
+      poco_throw_on_signal;
 
-    HelloRunnable runnable;
+      HelloRunnable runnable;
 
-    Poco::Thread thread;
-    thread.start(runnable);
-    thread.join();
+      Poco::Thread thread;
+
+      thread.start(runnable);
+      thread.join();
+    } catch (Poco::Exception &ex) {
+      std::cerr << ex.message() << std::endl;
+    }
+
+    _logger->trace("exit main");
+    Poco::Thread::sleep(5000);
+
     return EXIT_OK;
   }
 };
