@@ -11,8 +11,8 @@
 CXX := g++
 CXXFLAGS += -c -g -Wall -std=gnu++17
 LDFLAGS +=
-LIBFLAGS := -L/root/packages/poco-1.9.0/lib -lPocoNet
-INCLUDEFLAGS := -I/root/packages/poco-1.9.0/include
+LIBFLAGS := -L$(POCO_PATH)/lib -lPocoNet -lPocoUtil -lPocoFoundation
+INCLUDEFLAGS := -I$(POCO_PATH)/include
 
 TARGET := test
 

@@ -40,5 +40,6 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 
 clean:
 	rm -fr $(OBJDIR)/*.o $(BINDIR)/$(TARGET)
+	rm -f log/*
 
 distclean: clean
