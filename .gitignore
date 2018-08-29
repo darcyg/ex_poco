@@ -31,4 +31,5 @@
 *.out
 *.app
 
-log/
+# Test Data
+*.log

@@ -10,3 +10,4 @@ clean:
 	cd ./loggingConfigurator && make clean
 	cd ./serverApplication && make clean
 	cd ./thread && make clean
+	cd ./reactor && make clean
