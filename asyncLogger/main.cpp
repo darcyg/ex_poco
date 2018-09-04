@@ -36,7 +36,7 @@ public:
     Poco::Logger &logger = Poco::Logger::get("async_logger");
     for (int i = 0; i < 100000; ++i) {
       logger.trace(
-          Poco::format("[%s]massive log->%d", this->_name, this->_num++));
+          Poco::format("[%s]massive log->%d", this->_name, this->getPlusNum()));
     }
   }
 };
@@ -53,7 +53,7 @@ private:
   void uninitialize() { Poco::Util::Application::uninitialize(); }
 
   int main(const std::vector<std::string> &arguments) {
-    std::string logPath("./log"), logFilename("massive.log");
+    std::string logPath("./"), logFilename("massive.log");
     Poco::FileChannel *pFileChannel = new Poco::FileChannel;
     pFileChannel->setProperty("rotation", "100 M");
     pFileChannel->setProperty("archive", "timestamp");
