@@ -15,31 +15,30 @@
 #include <iostream>
 
 class MyApp : public Poco::Util::Application {
-private:
-  void initialize(Poco::Util::Application &self) {
-    loadConfiguration();
+   private:
+    void initialize(Poco::Util::Application &self) {
+        loadConfiguration();
 
-    Poco::Util::Application::initialize(self);
-  }
-
-  void uninitialize() { Poco::Util::Application::uninitialize(); }
-
-  int main(const std::vector<std::string> &arguments) {
-    try {
-      Poco::Logger &logger = this->logger();
-      // Poco::Logger &logger = Poco::Logger::root();
-      unsigned short port =
-          (unsigned short)config().getInt("reactor.port", 9977);
-
-      Poco::Net::ServerSocket serverSock(port);
-      Poco::net::SocketReactor reactor;
-
-    } catch (Poco::Exception &ex) {
-      std::cerr << ex.what() << std::endl;
+        Poco::Util::Application::initialize(self);
     }
 
-    return EXIT_OK;
-  }
+    void uninitialize() { Poco::Util::Application::uninitialize(); }
+
+    int main(const std::vector<std::string> &arguments) {
+        try {
+            Poco::Logger &logger = Application::instance().logger();
+            // Poco::Logger &logger = this->logger();
+            // Poco::Logger &logger = Poco::Logger::root();
+            unsigned short port = (unsigned short)config().getInt("reactor.port", 9977);
+
+            Poco::Net::ServerSocket serverSock(port);
+            Poco::Net::SocketReactor reactor;
+        } catch (Poco::Exception &ex) {
+            std::cerr << ex.what() << std::endl;
+        }
+
+        return EXIT_OK;
+    }
 };
 
 POCO_APP_MAIN(MyApp)

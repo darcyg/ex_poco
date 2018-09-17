@@ -11,7 +11,7 @@
 CXX := g++
 CXXFLAGS += -c -g -Wall -std=c++17
 LDFLAGS +=
-LIBFLAGS := -L$(POCO_PATH)/lib -lPocoUtil -lPocoFoundation
+LIBFLAGS := -L$(POCO_PATH)/lib -lPocoUtil -lPocoFoundation -lPocoNet
 INCLUDEFLAGS := -I$(POCO_PATH)/include
 
 TARGET := test
